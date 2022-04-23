@@ -4,6 +4,8 @@ description : Tri Huynh / Boosting Contrastive Self-Supervised Learning with Fal
 
 # Boosting Contrastive Self-Supervised Learning with False Negative Cancellation
 
+Link: [https://arxiv.org/abs/2011.11765](https://arxiv.org/abs/2011.11765)
+
 ## 0. Self-Supervised Learning
 
 Self-supervised learning is an unsupervised learning method where the supervised learning task is created out of the unlabelled input data.
@@ -26,9 +28,7 @@ Suppose we have a function f(represented by any deep network Resnet50 for exampl
 
 ![contrastive_learning.png](picture/contrastive_learning.png)
 
-Figure 1: Contrastive Learning
-
----
+ Figure 1: Contrastive Learning
 
 ## **1. Problem Definition**
 
@@ -52,10 +52,8 @@ For instance, in figure 2, the dog’s head on the left is attracted to its fur 
 > Considering undesirable negative pairs encourages the model to discard their common features through the embedding, which are indeed the common semantic content and slow convergence.
 > 
 
-<aside>
-> Therefore, the author proposes novel approaches to identify false negatives, as well as two strategies to mitigate their effect which are false negative elimination and attraction.**
-
-</aside>
+> Therefore, the author proposes novel approaches to identify false negatives, as well as two strategies to mitigate their effect which are false negative elimination and attraction.
+> 
 
 While recent efforts focus on improving architectures [1,3] and data augmentation [1], relatively little work considers the effects of negative samples, especially that of false negatives. Most existing methods focus on mining hard negatives [4,5] (i.e., the true negatives that are close to the anchor, which is distinct from false negatives) or most recently, reweighting positive and negative terms [6] to reduce the effects of undesirable negatives. While formulated differently, their approach is similar to multi-crop [7], in that it increases the contribution of positive terms by substracting them in the denominator of the contrastive loss, whereas multi-crop does so by adding positive terms in the numerator. **However, both methods still fail to identify false negatives and lack semantic feature diversity and those are the reasons why this paper comes.**
 
@@ -97,7 +95,7 @@ This softmax calculation is equivalent to getting the probability of the second 
 
 ![softmax_result.jpg](picture/softmax_result.jpg)
 
-Figure 7: Softmax Visualization*
+Figure 7: Softmax Visualization
 
 Then, the loss is calculated for a pair by taking the negative of the log of the above calculation. This formulation is the Noise Contrastive Estimation(NCE) Loss.
 
@@ -126,7 +124,7 @@ Figure 10: Pairwise Cosine Similarity Visualization
 
 ![false_negative_elimination_loss_formula.jpg](picture/false_negative_elimination_loss_formula.jpg)
 
-Figure 11: False Negative Elimination Loss
+ Figure 11: False Negative Elimination Loss
 
 The only difference here from the previous formula is they strict that **k must not be in the subset of Fi (refer to yellow highlight) →** We will discuss later on how to find false negatives
 
@@ -134,10 +132,8 @@ The only difference here from the previous formula is they strict that **k must 
 
 Minimizing the original contrastive loss (1) only seeks to attract an anchor to different views of the same image. **Including true positives drawn from different images would increase the diversity of the training data and, in turn, has the potential to improve the quality of the learned embeddings.**
 
-<aside>
 > Thus, the authors propose to treat the false negatives that have been identified as true positives and attract the anchor to this set.
-
-</aside>
+> 
 
 Below is the new loss attraction:
 
@@ -154,12 +150,14 @@ Figure 12: False negative attraction loss
 > 
 
 Pictures: A, B
-Main views: A1, A2, B1, B2
+
+Main views:  A1, A2, B1, B2
+
 Support views: A3, A4
 
 ![support_views.jpg](picture/support_views.jpg)
 
-Figure 13: Introducing Support Views
+ Figure 13: Introducing Support Views
 
 The picture of the dog’s head on the right side is not an augmented version of the anchor (main views left side). Consequently, while it is similar to the anchor image, it would thus be treated as a negative match by contemporary self-supervised methods (false negative). However, we can see that this image is more similar to the augmented view of the anchor (”support views”) than it is to the anchor with respect to the orientation of the dog’s face.
 
@@ -207,8 +205,9 @@ Figure 15: False Negative Elimination and SimCLR across Random Crop Ratio and Th
 
 ![false_negative_support_result.jpg](picture/false_negative_support_result.jpg)
 
-Figure 16: False Negative Cancellation with and without Support Set
-(the dashed line denotes the performance of SimCLR baseline)
+  Figure 16: False Negative Cancellation with and without Support Set
+
+  *(the dashed line denotes the performance of SimCLR baseline)*
 
 > This likely results from the fact that the attraction strategy is more sensitive to invalid false negatives, justifying the use of a support set to reliably find false negatives
 > 
@@ -224,7 +223,7 @@ Figure 17: False Negative Cancellation(Mean and Max Aggregation) Support Size an
 
 ![top_k_threshold_result.jpg](picture/top_k_threshold_result.jpg)
 
-Figure 18: Top-K and Threshold for False Negative Elimination and Attraction
+ Figure 18: Top-K and Threshold for False Negative Elimination and Attraction
 
 1. **False negative attraction is superior to elimination when the detected false negatives are valid**
     
@@ -234,7 +233,7 @@ Figure 18: Top-K and Threshold for False Negative Elimination and Attraction
 
 ![multicrop_momentum_encoder.jpg](picture/multicrop_momentum_encoder.jpg)
 
-Figure 19: Top-1 accuracy improvement of false negative cancellation for different baselines
+Figure 19: Top-1 accuracy improvement of false negative cancellation for different baselines.
 
 **Multicrop:** support set can also be used as additional positive views for multi-crop to double the performance
 
@@ -259,7 +258,7 @@ for false negative cancellation:
 
 ![imagenet_linear_evaluation.jpg](picture/imagenet_linear_evaluation.jpg)
 
-Figure 20: ImageNet Linear Evaluation
+ Figure 20: ImageNet Linear Evaluation
 
 > In terms of top-1 accuracy, FNC (proposed method) is the highest among all of the baseline models except SwAV
 > 
@@ -268,7 +267,7 @@ Figure 20: ImageNet Linear Evaluation
 
 ![transfer_learning.jpg](picture/transfer_learning.jpg)
 
-Figure 21: Transfer Learning on Classification Task using ImageNet-pretrained ResNet Models across 12 Datasets
+Figure 21: Transfer Learning on Classification Task using ImageNet-pretrained ResNet Models across 12 Datasets.
 
 > In finetuning, FNC (proposed method) outperforms both SimCLR v1 and v2 on all but one dataset, and matches that of BYOL, with each being superior on about half of the datasets
 > 
@@ -289,9 +288,8 @@ In my opinion, the FNC (proposed method) is simple as it is the extended version
 
 ## **6. Reference & Additional materials**
 
-[**Main Paper**] (https://arxiv.org/abs/2011.11765)
-
 ### Website References:
+
 - [**Github Implementation**](https://github.com/google-research/fnc)
 - [**Self-supervised-learning-methods-for-computer-vision**](https://towardsdatascience.com/self-supervised-learning-methods-for-computer-vision-c25ec10a91bd)
 - [**Illustrated SimCLR**](https://amitness.com/2020/03/illustrated-simclr/#:~:text=b.&text=SimCLR%20uses%20a%20contrastive%20loss,these%20two%20images%20being%20similar)
