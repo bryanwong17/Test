@@ -45,7 +45,7 @@ Positive pairs derived from different views of the same image are generally trus
 
 ![false_negative_in_contrastive_learning.jpg](picture/false_negative_in_contrastive_learning.jpg)
 
-                                                 Figure 2: False Negatives in Contrastive Learning
+Figure 2: False Negatives in Contrastive Learning
 
 For instance, in figure 2, the dog’s head on the left is attracted to its fur (positive pair), but repelled from similar fur of another dog's image on the right (negative pair), creating contradicting objectives.
 
@@ -53,7 +53,7 @@ For instance, in figure 2, the dog’s head on the left is attracted to its fur 
 > 
 
 <aside>
-💡 **Therefore, the author proposes novel approaches to identify false negatives, as well as two strategies to mitigate their effect which are false negative elimination and attraction.**
+> Therefore, the author proposes novel approaches to identify false negatives, as well as two strategies to mitigate their effect which are false negative elimination and attraction.**
 
 </aside>
 
@@ -63,7 +63,7 @@ While recent efforts focus on improving architectures [1,3] and data augmentatio
 
 ![proposed_framework.jpg](picture/proposed_framework.jpg)
 
-                                                *Figure 3: Overview of the Proposed Framework*
+Figure 3: Overview of the Proposed Framework
 
 **Left:** Original definition of the anchor, positive, and negative samples in contrastive learning
 
@@ -77,7 +77,7 @@ For each anchor image i, measures the similarity between its embedding *zi* and 
 
 ![contrastive_learning_loss.jpg](picture/contrastive_learning_loss.jpg)
 
-                                                   *Figure 4: Contrastive Learning Loss*
+Figure 4: Contrastive Learning Loss
 
 **Example:**
 
@@ -85,37 +85,37 @@ Let's say we have two images in a batch and the augmented pairs are taken one by
 
 ![augmented_images_in_batch.jpg](picture/augmented_images_in_batch.jpg)
 
-                                                   *Figure 5: Augmented Images in Batch*
+Figure 5: Augmented Images in Batch
 
 Next, we apply the softmax function to get the probability of these two images being similar
 
 ![softmax.jpg](picture/softmax.jpg)
 
-                                                         *Figure 6: Calculation of Softmax*
+Figure 6: Calculation of Softmax
 
 This softmax calculation is equivalent to getting the probability of the second augmented cat image being the most similar to the first cat image in the pair. Here, all remaining images in the batch are sampled as dissimilar images (negative pairs).
 
 ![softmax_result.jpg](picture/softmax_result.jpg)
 
-                                                         *Figure 7: Softmax Visualization*
+Figure 7: Softmax Visualization*
 
 Then, the loss is calculated for a pair by taking the negative of the log of the above calculation. This formulation is the Noise Contrastive Estimation(NCE) Loss.
 
 ![nce_loss.jpg](picture/nce_loss.jpg)
 
-                                                 *Figure 8: Contrastive Learning Loss Visualization*
+Figure 8: Contrastive Learning Loss Visualization
 
 where similarity formula is as shown below:
 
 ![similarity calculation.jpg](picture/similarity_calculation.jpg)
 
-                                                           *Figure 9: Cosine Similarity*
+Figure 9: Cosine Similarity
 
 Below is the visualization of pairwise cosine similarity between each augmented image in a batch
 
 ![pairwise_cosine_similarity.jpg](picture/pairwise_cosine_similarity.jpg)
 
-                                            *Figure 10: Pairwise Cosine Similarity Visualization*
+Figure 10: Pairwise Cosine Similarity Visualization
 
 ### False Negative Elimination
 
@@ -126,7 +126,7 @@ Below is the visualization of pairwise cosine similarity between each augmented 
 
 ![false_negative_elimination_loss_formula.jpg](picture/false_negative_elimination_loss_formula.jpg)
 
-                                                   *Figure 11: False Negative Elimination Loss*
+Figure 11: False Negative Elimination Loss
 
 The only difference here from the previous formula is they strict that **k must not be in the subset of Fi (refer to yellow highlight) →** We will discuss later on how to find false negatives
 
@@ -135,7 +135,7 @@ The only difference here from the previous formula is they strict that **k must 
 Minimizing the original contrastive loss (1) only seeks to attract an anchor to different views of the same image. **Including true positives drawn from different images would increase the diversity of the training data and, in turn, has the potential to improve the quality of the learned embeddings.**
 
 <aside>
-💡 **Thus, the authors propose to treat the false negatives that have been identified as true positives and attract the anchor to this set.**
+> Thus, the authors propose to treat the false negatives that have been identified as true positives and attract the anchor to this set.
 
 </aside>
 
@@ -143,7 +143,7 @@ Below is the new loss attraction:
 
 ![false_negative_attraction_loss_formula.jpg](picture/false_negative_attraction_loss_formula.jpg)
 
-                                                    *Figure 12: False negative attraction loss*
+Figure 12: False negative attraction loss
 
 ### Finding False Negatives
 
@@ -153,15 +153,13 @@ Below is the new loss attraction:
 > A false negative may not be as similar to the anchor as it is to other augmentations of the same image, as each augmentation only holds a specific view of the object
 > 
 
-                                                    A                                                                   B
-
-Main views:                             A1, A2                                                          B1, B2
-
-Support views:                       A3, A4
+Pictures: A, B
+Main views: A1, A2, B1, B2
+Support views: A3, A4
 
 ![support_views.jpg](picture/support_views.jpg)
 
-                                                      *Figure 13: Introducing Support Views*
+Figure 13: Introducing Support Views
 
 The picture of the dog’s head on the right side is not an augmented version of the anchor (main views left side). Consequently, while it is similar to the anchor image, it would thus be treated as a negative match by contemporary self-supervised methods (false negative). However, we can see that this image is more similar to the augmented view of the anchor (”support views”) than it is to the anchor with respect to the orientation of the dog’s face.
 
@@ -179,7 +177,7 @@ Motivated by the above observation, the authors propose a strategy for identifyi
 
 ![identify_false_negative.jpg](picture/identify_false_negative.jpg)
 
-                                                    *Figure 14: Steps from Paper as Reference*
+Figure 14: Steps from Paper as Reference
 
 ## **4. Experiment**
 
@@ -201,7 +199,7 @@ The authors tested in the same configurations as SimCLR V2 for pretraining and e
 
 ![false_negative_cancellation_result.jpg](picture/false_negative_cancellation_result.jpg)
 
-        *Figure 15: False Negative Elimination and SimCLR across Random Crop Ratio and Threshold*
+Figure 15: False Negative Elimination and SimCLR across Random Crop Ratio and Threshold
 
 > They postulate that the bigger gap for larger crop sizes is due to the increased chance of having common semantic content in big crops, which leads to a higher ratio of false negatives
 > 
@@ -209,9 +207,8 @@ The authors tested in the same configurations as SimCLR V2 for pretraining and e
 
 ![false_negative_support_result.jpg](picture/false_negative_support_result.jpg)
 
-                             *Figure 16: False Negative Cancellation with and without Support Set*
-
-                               *(the dashed line denotes the performance of SimCLR baseline)*
+Figure 16: False Negative Cancellation with and without Support Set
+(the dashed line denotes the performance of SimCLR baseline)
 
 > This likely results from the fact that the attraction strategy is more sensitive to invalid false negatives, justifying the use of a support set to reliably find false negatives
 > 
@@ -219,7 +216,7 @@ The authors tested in the same configurations as SimCLR V2 for pretraining and e
 
 ![aggregation_result.jpg](picture/aggregation_result.jpg)
 
-*Figure 17: False Negative Cancellation(Mean and Max Aggregation) Support Size and Top-K*
+Figure 17: False Negative Cancellation(Mean and Max Aggregation) Support Size and Top-K
 
 > This may be due to the fact that false negatives are similar to a strict subset of the support set, in which case considering all elements as in mean aggregation corrupts the similarity score
 > 
@@ -227,7 +224,7 @@ The authors tested in the same configurations as SimCLR V2 for pretraining and e
 
 ![top_k_threshold_result.jpg](picture/top_k_threshold_result.jpg)
 
-                 *Figure 18: Top-K and Threshold for False Negative Elimination and Attraction*
+Figure 18: Top-K and Threshold for False Negative Elimination and Attraction
 
 1. **False negative attraction is superior to elimination when the detected false negatives are valid**
     
@@ -237,7 +234,7 @@ The authors tested in the same configurations as SimCLR V2 for pretraining and e
 
 ![multicrop_momentum_encoder.jpg](picture/multicrop_momentum_encoder.jpg)
 
-*Figure 19: Top-1 accuracy improvement of false negative cancellation for different baselines.*
+Figure 19: Top-1 accuracy improvement of false negative cancellation for different baselines
 
 **Multicrop:** support set can also be used as additional positive views for multi-crop to double the performance
 
@@ -262,7 +259,7 @@ for false negative cancellation:
 
 ![imagenet_linear_evaluation.jpg](picture/imagenet_linear_evaluation.jpg)
 
-                                                 *Figure 20: ImageNet Linear Evaluation*
+Figure 20: ImageNet Linear Evaluation
 
 > In terms of top-1 accuracy, FNC (proposed method) is the highest among all of the baseline models except SwAV
 > 
@@ -271,7 +268,7 @@ for false negative cancellation:
 
 ![transfer_learning.jpg](picture/transfer_learning.jpg)
 
-*Figure 21: Transfer Learning on Classification Task using ImageNet-pretrained ResNet Models across 12 Datasets.*
+Figure 21: Transfer Learning on Classification Task using ImageNet-pretrained ResNet Models across 12 Datasets
 
 > In finetuning, FNC (proposed method) outperforms both SimCLR v1 and v2 on all but one dataset, and matches that of BYOL, with each being superior on about half of the datasets
 > 
@@ -292,8 +289,9 @@ In my opinion, the FNC (proposed method) is simple as it is the extended version
 
 ## **6. Reference & Additional materials**
 
-### Website References:
+[**Main Paper**] (https://arxiv.org/abs/2011.11765)
 
+### Website References:
 - [**Github Implementation**](https://github.com/google-research/fnc)
 - [**Self-supervised-learning-methods-for-computer-vision**](https://towardsdatascience.com/self-supervised-learning-methods-for-computer-vision-c25ec10a91bd)
 - [**Illustrated SimCLR**](https://amitness.com/2020/03/illustrated-simclr/#:~:text=b.&text=SimCLR%20uses%20a%20contrastive%20loss,these%20two%20images%20being%20similar)
