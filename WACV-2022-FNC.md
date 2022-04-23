@@ -228,8 +228,7 @@ The authors tested in the same configurations as SimCLR V2 for pretraining and e
   <img width="500" src="picture/false_negative_support_result.jpg"
 </p>
 <p align="center">Figure 16: False Negative Cancellation with and without Support Set </p>
-
-  *(the dashed line denotes the performance of SimCLR baseline)*
+<p align="center">(the dashed line denotes the performance of SimCLR baseline) </p>
 
 > This likely results from the fact that the attraction strategy is more sensitive to invalid false negatives, justifying the use of a support set to reliably find false negatives
 > 
