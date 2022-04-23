@@ -28,7 +28,7 @@ Suppose we have a function f(represented by any deep network Resnet50 for exampl
 
 <p align="center">
   <img width="500" src="picture/contrastive_learning.png"
-  alt="Figure 1: Contrastive Learning"
+  Figure 1: Contrastive Learning
 </p>
 
 ## **1. Problem Definition**
