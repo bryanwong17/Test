@@ -1,8 +1,8 @@
 ---
-description : Tri Huynh / Boosting Contrastive Self-Supervised Learning with False Negative Cancellation / 2022 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)
+description : Tri Huynh / Boosting Contrastive Self-Supervised Learning with False Negative Cancellation / 2022 IEEE CVF Winter Conference on Applications of Computer Vision (WACV)
 ---
 
-# [Boosting Contrastive Self-Supervised Learning with False Negative Cancellation](https://arxiv.org/abs/2011.11765)
+# Boosting Contrastive Self-Supervised Learning with False Negative Cancellation
 
 ## 0. Self-Supervised Learning
 
@@ -24,7 +24,7 @@ Contrastive learning aims to group similar samples closer and diverse samples fa
 
 Suppose we have a function f(represented by any deep network Resnet50 for example), given an input x, it gives us the features f(x) as output. Contrastive Learning states that for any positive pairs x1 and x2, the respective outputs f(x1) and f(x2) should be similar to each other and for a negative input x3, f(x1) and f(x2) both should be dissimilar to f(x3).
 
-![contrastive_learning.png](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/contrastive_learning.png)
+![contrastive_learning.png](picture/contrastive_learning.png)
 
                                                          *Figure 1: Contrastive Learning*
 
@@ -43,7 +43,7 @@ Positive pairs derived from different views of the same image are generally trus
 > Without knowledge of labels, automatically selected negative pairs could actually belong to the same semantic category and hence, creating false negatives.
 > 
 
-![false_negative_in_contrastive_learning.jpg](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/false_negative_in_contrastive_learning.jpg)
+![false_negative_in_contrastive_learning.jpg](picture/false_negative_in_contrastive_learning.jpg)
 
                                                  Figure 2: False Negatives in Contrastive Learning
 
@@ -61,7 +61,7 @@ While recent efforts focus on improving architectures [1,3] and data augmentatio
 
 ## **3. Method**
 
-![proposed_framework.jpg](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/proposed_framework.jpg)
+![proposed_framework.jpg](picture/proposed_framework.jpg)
 
                                                 *Figure 3: Overview of the Proposed Framework*
 
@@ -75,7 +75,7 @@ While recent efforts focus on improving architectures [1,3] and data augmentatio
 
 For each anchor image i, measures the similarity between its embedding *zi* and that of its positive match *zj* relative to the similarity between the anchor embedding of k ∈ {1, . . . , M} negative matches:
 
-![contrastive_learning_loss.jpg](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/contrastive_learning_loss.jpg)
+![contrastive_learning_loss.jpg](picture/contrastive_learning_loss.jpg)
 
                                                    *Figure 4: Contrastive Learning Loss*
 
@@ -83,37 +83,37 @@ For each anchor image i, measures the similarity between its embedding *zi* and 
 
 Let's say we have two images in a batch and the augmented pairs are taken one by one
 
-![augmented_images_in_batch.jpg](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/augmented_images_in_batch.jpg)
+![augmented_images_in_batch.jpg](picture/augmented_images_in_batch.jpg)
 
                                                    *Figure 5: Augmented Images in Batch*
 
 Next, we apply the softmax function to get the probability of these two images being similar
 
-![softmax.jpg](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/softmax.jpg)
+![softmax.jpg](picture/softmax.jpg)
 
                                                          *Figure 6: Calculation of Softmax*
 
 This softmax calculation is equivalent to getting the probability of the second augmented cat image being the most similar to the first cat image in the pair. Here, all remaining images in the batch are sampled as dissimilar images (negative pairs).
 
-![softmax_result.jpg](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/softmax_result.jpg)
+![softmax_result.jpg](picture/softmax_result.jpg)
 
                                                          *Figure 7: Softmax Visualization*
 
 Then, the loss is calculated for a pair by taking the negative of the log of the above calculation. This formulation is the Noise Contrastive Estimation(NCE) Loss.
 
-![nce_loss.jpg](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/nce_loss.jpg)
+![nce_loss.jpg](picture/nce_loss.jpg)
 
                                                  *Figure 8: Contrastive Learning Loss Visualization*
 
 where similarity formula is as shown below:
 
-![similarity calculation.jpg](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/similarity_calculation.jpg)
+![similarity calculation.jpg](picture/similarity_calculation.jpg)
 
                                                            *Figure 9: Cosine Similarity*
 
 Below is the visualization of pairwise cosine similarity between each augmented image in a batch
 
-![pairwise_cosine_similarity.jpg](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/pairwise_cosine_similarity.jpg)
+![pairwise_cosine_similarity.jpg](picture/pairwise_cosine_similarity.jpg)
 
                                             *Figure 10: Pairwise Cosine Similarity Visualization*
 
@@ -124,7 +124,7 @@ Below is the visualization of pairwise cosine similarity between each augmented 
 
  Following is the slight modification to the contrastive learning loss formula above:
 
-![false_negative_elimination_loss_formula.jpg](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/false_negative_elimination_loss_formula.jpg)
+![false_negative_elimination_loss_formula.jpg](picture/false_negative_elimination_loss_formula.jpg)
 
                                                    *Figure 11: False Negative Elimination Loss*
 
@@ -141,7 +141,7 @@ Minimizing the original contrastive loss (1) only seeks to attract an anchor to 
 
 Below is the new loss attraction:
 
-![false_negative_attraction_loss_formula.jpg](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/false_negative_attraction_loss_formula.jpg)
+![false_negative_attraction_loss_formula.jpg](picture/false_negative_attraction_loss_formula.jpg)
 
                                                     *Figure 12: False negative attraction loss*
 
@@ -159,7 +159,7 @@ Main views:                             A1, A2                                  
 
 Support views:                       A3, A4
 
-![support_views.jpg](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/support_views.jpg)
+![support_views.jpg](picture/support_views.jpg)
 
                                                       *Figure 13: Introducing Support Views*
 
@@ -177,7 +177,7 @@ Motivated by the above observation, the authors propose a strategy for identifyi
 > **Below are the steps from the paper for reference:**
 > 
 
-![identify_false_negative.jpg](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/identify_false_negative.jpg)
+![identify_false_negative.jpg](picture/identify_false_negative.jpg)
 
                                                     *Figure 14: Steps from Paper as Reference*
 
@@ -199,7 +199,7 @@ The authors tested in the same configurations as SimCLR V2 for pretraining and e
 
 1. **False negative cancellation consistently improves contrastive learning across crop sizes and the gap is higher for bigger crops**
 
-![false_negative_cancellation_result.jpg](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/false_negative_cancellation_result.jpg)
+![false_negative_cancellation_result.jpg](picture/false_negative_cancellation_result.jpg)
 
         *Figure 15: False Negative Elimination and SimCLR across Random Crop Ratio and Threshold*
 
@@ -207,7 +207,7 @@ The authors tested in the same configurations as SimCLR V2 for pretraining and e
 > 
 1. **Having a support set helps in finding false negatives regardless of the cancellation strategy, with greater benefits with the attraction strategy**
 
-![false_negative_support_result.jpg](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/false_negative_support_result.jpg)
+![false_negative_support_result.jpg](picture/false_negative_support_result.jpg)
 
                              *Figure 16: False Negative Cancellation with and without Support Set*
 
@@ -217,7 +217,7 @@ The authors tested in the same configurations as SimCLR V2 for pretraining and e
 > 
 1. **Maximum aggregation significantly and consistently outperforms mean aggregation for the attraction strategy**
 
-![aggregation_result.jpg](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/aggregation_result.jpg)
+![aggregation_result.jpg](picture/aggregation_result.jpg)
 
 *Figure 17: False Negative Cancellation(Mean and Max Aggregation) Support Size and Top-K*
 
@@ -225,17 +225,17 @@ The authors tested in the same configurations as SimCLR V2 for pretraining and e
 > 
 1. **Filtering by top-k tends to perform better than by a threshold, while a combination of both provides the best balance**
 
-![top_k_threshold_result.jpg](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/top_k_threshold_result.jpg)
+![top_k_threshold_result.jpg](picture/top_k_threshold_result.jpg)
 
                  *Figure 18: Top-K and Threshold for False Negative Elimination and Attraction*
 
 1. **False negative attraction is superior to elimination when the detected false negatives are valid**
     
-    ![attraction_better.jpg](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/attraction_better.jpg)
+    ![attraction_better.jpg](picture/attraction_better.jpg)
     
 2. **Multicrop and momentum encoders help get higher accuracy**
 
-![multicrop_momentum_encoder.jpg](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/multicrop_momentum_encoder.jpg)
+![multicrop_momentum_encoder.jpg](picture/multicrop_momentum_encoder.jpg)
 
 *Figure 19: Top-1 accuracy improvement of false negative cancellation for different baselines.*
 
@@ -260,7 +260,7 @@ for false negative cancellation:
 
 **Dataset:** ImageNet
 
-![imagenet_linear_evaluation.jpg](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/imagenet_linear_evaluation.jpg)
+![imagenet_linear_evaluation.jpg](picture/imagenet_linear_evaluation.jpg)
 
                                                  *Figure 20: ImageNet Linear Evaluation*
 
@@ -269,7 +269,7 @@ for false negative cancellation:
 
 ### Transferring Features
 
-![transfer_learning.jpg](WACV-2022-FNC%20063eb2378f7b4705b99253b515fabd64/transfer_learning.jpg)
+![transfer_learning.jpg](picture/transfer_learning.jpg)
 
 *Figure 21: Transfer Learning on Classification Task using ImageNet-pretrained ResNet Models across 12 Datasets.*
 
