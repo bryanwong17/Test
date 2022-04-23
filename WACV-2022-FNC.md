@@ -26,7 +26,7 @@ Suppose we have a function f(represented by any deep network Resnet50 for exampl
 
 ![contrastive_learning.png](picture/contrastive_learning.png)
 
-                                                         *Figure 1: Contrastive Learning*
+Figure 1: Contrastive Learning
 
 ---
 
